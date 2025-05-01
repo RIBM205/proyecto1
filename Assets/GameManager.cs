@@ -3,7 +3,7 @@ using TMPro;//Agregamos libreria de Text Mesh Pro
 
 public class GameManager : MonoBehaviour
 {
-    int score;
+    public  int score =0;
     public TextMeshProUGUI textoScore;
 
     void Start()

@@ -4,16 +4,33 @@ public class enemigoScript : MonoBehaviour
 {
     Transform objetivo;
     public float speedE;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        objetivo=GameObject.Find("Jugador").GetComponent<Transform>();
+        Debug.Log("enemigoScript Start: Buscando objeto 'Jugador'...");
+        objetivo = GameObject.Find("Jugador")?.GetComponent<Transform>();
+
+        if (objetivo != null)
+        {
+            Debug.Log("enemigoScript Start: Jugador encontrado correctamente.");
+        }
+        else
+        {
+            Debug.LogError("enemigoScript Start: No se encontró el GameObject 'Jugador'.");
+            GameObject.Destroy(gameObject); // Destruye el enemigo si no se encuentra el jugador
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector2 target=Vector2.MoveTowards(transform.position,objetivo.position,speedE*Time.deltaTime);
-        transform.position=target;//Avanzar hacia el player
+        if (objetivo == null)
+        {
+            Debug.LogWarning("enemigoScript Update: objetivo está nulo. No se puede mover el enemigo.");
+            return;
+        }
+
+        Vector2 target = Vector2.MoveTowards(transform.position, objetivo.position, speedE * Time.deltaTime);
+        transform.position = target;
     }
+
 }
